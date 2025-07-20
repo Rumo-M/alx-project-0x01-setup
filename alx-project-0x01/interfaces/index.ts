@@ -21,15 +21,8 @@ export interface UserProps {
   };
 }
 
-// PostData with optional id
-export interface PostData {
-  id?: number;  // ✅ optional id property
-  title: string;
-  body: string;
-}
-
-// Props for a form or component that submits a post
-export interface PostFormProps {
+// Props interface for a User modal component
+export interface UserModalProps {
   onClose: () => void;
-  onSubmit: (post: PostData) => void;
+  onSubmit: (post: UserProps) => void;  // <== as requested
 }
