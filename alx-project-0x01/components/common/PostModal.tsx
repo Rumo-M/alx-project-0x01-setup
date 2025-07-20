@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { PostData, PostFormProps } from '@/interfaces';
+import { PostData, PostModalProps } from '@/interfaces';
 
-const PostModal: React.FC<PostFormProps> = ({ onClose, onSubmit }) => {
+const PostModal: React.FC<PostModalProps> = ({ onClose, onSubmit }) => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Close modal on ESC key press
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -15,7 +14,6 @@ const PostModal: React.FC<PostFormProps> = ({ onClose, onSubmit }) => {
     return () => document.removeEventListener('keydown', handleEsc);
   }, [onClose]);
 
-  // Close modal if clicked outside content
   const handleClickOutside = (e: React.MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       onClose();
@@ -24,7 +22,7 @@ const PostModal: React.FC<PostFormProps> = ({ onClose, onSubmit }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !body.trim()) return; // simple validation
+    if (!title.trim() || !body.trim()) return;
     onSubmit({ title, body });
     setTitle('');
     setBody('');
