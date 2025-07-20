@@ -1,17 +1,15 @@
-import Image from 'next/image';
+import React from 'react';
+import { PostProps } from '@/interfaces';
 
-export default function PostCard() {
+const PostCard: React.FC<PostProps> = ({ userId, id, title, body }) => {
   return (
-    <div className="border rounded p-4 shadow">
-      <Image
-        src="/assets/images/sample.jpg" // this file should go in public/assets/images
-        alt="Sample Post"
-        width={400}
-        height={250}
-        className="rounded"
-      />
-      <h2 className="text-lg font-semibold mt-2">Post Title</h2>
-      <p className="text-sm text-gray-600">Post description goes here...</p>
+    <div className="p-4 border rounded shadow">
+      <h2 className="text-lg font-semibold mb-1">{title}</h2>
+      <p className="text-gray-600 mb-2">{body}</p>
+      <p className="text-sm text-gray-500">User ID: {userId}</p>
+      <p className="text-sm text-gray-500">Post ID: {id}</p>
     </div>
   );
-}
+};
+
+export default PostCard;
