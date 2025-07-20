@@ -1,6 +1,7 @@
+import React from 'react';
 import Link from 'next/link';
 
-export default function Header() {
+const Header: React.FC = () => {
   return (
     <header className="bg-gray-900 text-white px-6 py-4 shadow-md">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
@@ -14,4 +15,6 @@ export default function Header() {
       </div>
     </header>
   );
-}
+};
+
+export default Header;
