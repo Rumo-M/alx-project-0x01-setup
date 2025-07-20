@@ -1,34 +1,25 @@
-import Layout from '@/components/layout/Layout';
-import PostCard from '@/components/common/PostCard';
 
-const mockPosts = [
-  {
-    id: 1,
-    title: 'First Post',
-    description: 'This is the description for the first post.',
-  },
-  {
-    id: 2,
-    title: 'Second Post',
-    description: 'This is the description for the second post.',
-  },
-];
+import Header from "@/components/layout/Header";
 
-export default function PostsPage() {
+const Home: React.FC = () => {
   return (
-    <Layout>
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-2xl font-bold mb-6">All Posts</h1>
-        <div className="space-y-4">
-          {mockPosts.map((post) => (
-            <PostCard
-              key={post.id}
-              title={post.title}
-              description={post.description}
-            />
-          ))}
-        </div>
-      </div>
-    </Layout>
-  );
+    <div className="flex flex-col h-screen">
+      <Header />
+      <main className="flex-grow flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
+        <div className="text-center">
+          <h1 className="text-5xl font-bold text-white">
+            Welcome to our Application!
+          </h1>
+          <p className="mt-4 text-xl text-white">
+            We're glad you're here. Explore and enjoy your experience.
+          </p>
+          <button className="mt-6 px-6 py-3 bg-white text-blue-500 rounded-full font-semibold hover:bg-gray-200 transition">
+            Get Started
+          </button>
+            </div>
+      </main>
+    </div>
+  )
 }
+
+export default Home;
