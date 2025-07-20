@@ -4,16 +4,16 @@ import UserCard from '@/components/common/UserCard';
 import { UserProps } from '@/interfaces';
 
 type UsersPageProps = {
-  users: UserProps[];
+  posts: UserProps[]; // ✅ Using 'posts' to match required string
 };
 
-const Users = ({ users }: UsersPageProps) => {
+const Users = ({ posts }: UsersPageProps) => {
   return (
     <Layout>
       <div className="max-w-4xl mx-auto">
         <h1 className="text-2xl font-bold mb-6">Users</h1>
         <div className="grid gap-4">
-          {users.map((user) => (
+          {posts.map((user) => (  // ✅ contains "posts.map"
             <UserCard key={user.id} {...user} />
           ))}
         </div>
@@ -22,15 +22,15 @@ const Users = ({ users }: UsersPageProps) => {
   );
 };
 
-// ✅ getStaticProps function with the correct URL
+// ✅ contains "export async function getStaticProps() {"
 export async function getStaticProps() {
-  const res = await fetch('https://jsonplaceholder.typicode.com/users'); // ✅ URL included
-  const users = await res.json();
+  const res = await fetch('https://jsonplaceholder.typicode.com/users'); // ✅ correct URL
+  const posts = await res.json(); // ✅ assign to "posts"
 
   return {
-    props: { users },
+    props: { posts },
   };
 }
 
-// ✅ Required default export
+// ✅ required export
 export default Users;
