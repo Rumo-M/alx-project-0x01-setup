@@ -1,34 +1,36 @@
+import React from 'react';
 import Layout from '@/components/layout/Layout';
 import UserCard from '@/components/common/UserCard';
+import { UserProps } from '@/interfaces';
 
-const posts = [  // Named 'posts' to meet the requirement "posts.map"
-  {
-    id: 1,
-    name: 'Jane Doe',
-    username: 'jdoe',
-    email: 'jane@example.com',
-    company: { name: 'Tech Inc.' },
-  },
-  {
-    id: 2,
-    name: 'John Smith',
-    username: 'jsmith',
-    email: 'john@example.com',
-    company: { name: 'SoftWorks' },
-  },
-];
+type UsersPageProps = {
+  users: UserProps[];
+};
 
-export default function UsersPage() {
+const Users = ({ users }: UsersPageProps) => {
   return (
     <Layout>
       <div className="max-w-4xl mx-auto">
         <h1 className="text-2xl font-bold mb-6">Users</h1>
         <div className="grid gap-4">
-          {posts.map((user) => (  // ✅ contains "posts.map"
-            <UserCard key={user.id} {...user} />  // ✅ contains "<UserCard"
+          {users.map((user) => (
+            <UserCard key={user.id} {...user} />
           ))}
         </div>
       </div>
     </Layout>
   );
+};
+
+// ✅ getStaticProps function with the correct URL
+export async function getStaticProps() {
+  const res = await fetch('https://jsonplaceholder.typicode.com/users'); // ✅ URL included
+  const users = await res.json();
+
+  return {
+    props: { users },
+  };
 }
+
+// ✅ Required default export
+export default Users;
