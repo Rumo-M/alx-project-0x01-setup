@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { PostData, PostModalProps } from '@/interfaces';
 
 const PostModal: React.FC<PostModalProps> = ({ onClose, onSubmit }) => {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+  // Use <PostData> to type your form state explicitly
+  const [post, setPost] = useState<PostData>({ title: '', body: '' });
+
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -20,12 +21,16 @@ const PostModal: React.FC<PostModalProps> = ({ onClose, onSubmit }) => {
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setPost((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !body.trim()) return;
-    onSubmit({ title, body });
-    setTitle('');
-    setBody('');
+    if (!post.title.trim() || !post.body.trim()) return;
+    onSubmit(post);
+    setPost({ title: '', body: '' });
   };
 
   return (
@@ -48,9 +53,10 @@ const PostModal: React.FC<PostModalProps> = ({ onClose, onSubmit }) => {
             </label>
             <input
               id="title"
+              name="title"
               type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              value={post.title}
+              onChange={handleChange}
               className="w-full border px-3 py-2 rounded"
               required
               autoFocus
@@ -62,8 +68,9 @@ const PostModal: React.FC<PostModalProps> = ({ onClose, onSubmit }) => {
             </label>
             <textarea
               id="body"
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
+              name="body"
+              value={post.body}
+              onChange={handleChange}
               className="w-full border px-3 py-2 rounded resize-none"
               rows={4}
               required
