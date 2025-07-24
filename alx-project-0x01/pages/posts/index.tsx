@@ -1,13 +1,11 @@
-import { GetStaticProps } from 'next';
-import { PostProps } from '@/interfaces';
-import PostCard from '@/components/common/PostCard';
+// pages/posts/index.tsx
 
-interface PostsPageProps {
-  posts: PostProps[];
-}
+import Header from "@/components/layout/Header";
+import { PostProps } from "@/interfaces";
+import { GetStaticProps } from "next";
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
   const posts: PostProps[] = await res.json();
 
   return {
@@ -15,16 +13,22 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-const Posts = ({ posts }: PostsPageProps) => {
+const Posts = ({ posts }: { posts: PostProps[] }) => {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Posts</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {posts.map((post) => (
-          <PostCard key={post.id} {...post} />
-        ))}
-      </div>
-    </div>
+    <>
+      <Header />
+      <main className="p-4">
+        <h1 className="text-2xl font-bold mb-4">Posts</h1>
+        <ul className="space-y-4">
+          {posts.map((post) => (
+            <li key={post.id}>
+              <h2 className="text-xl font-semibold">{post.title}</h2>
+              <p>{post.body}</p>
+            </li>
+          ))}
+        </ul>
+      </main>
+    </>
   );
 };
 
