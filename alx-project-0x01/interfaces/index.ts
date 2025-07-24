@@ -1,3 +1,5 @@
+// interfaces/index.ts
+
 export interface PostProps {
   userId: number;
   id: number;
@@ -5,24 +7,14 @@ export interface PostProps {
   body: string;
 }
 
-export interface UserProps {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  address: {
-    street: string;
-    city: string;
-    zipcode: string;
-  };
-  company: {
-    name: string;
-    catchPhrase: string;
-  };
+export interface PostData {
+  title: string;
+  body: string;
+  id?: number;
 }
 
-// Props interface for a User modal component
-export interface UserModalProps {
+export interface PostModalProps {
   onClose: () => void;
-  onSubmit: (post: UserProps) => void;  // <== as requested
+  onSubmit: (post: PostData) => void;
+  post?: PostData | null;
 }
