@@ -1,8 +1,10 @@
 // pages/posts/index.tsx
 
+import React, { useState } from "react";
 import Header from "@/components/layout/Header";
-import PostCard from "@/components/common/PostCard";  // Import PostCard component
-import { PostProps } from "@/interfaces";
+import PostCard from "@/components/common/PostCard";
+import PostModal from "@/components/common/PostModal";
+import { PostProps, PostData } from "@/interfaces";
 
 export async function getStaticProps() {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");
@@ -14,6 +16,23 @@ export async function getStaticProps() {
 }
 
 const Posts = ({ posts }: { posts: PostProps[] }) => {
+  // State to hold the currently selected post for the modal
+  const [post, setPost] = useState<PostData | null>(null);
+  // State to toggle modal visibility
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  // Function to open modal and set selected post
+  const openModal = (selectedPost: PostData) => {
+    setPost(selectedPost);
+    setModalOpen(true);
+  };
+
+  // Function to close modal and clear selected post
+  const closeModal = () => {
+    setPost(null);
+    setModalOpen(false);
+  };
+
   return (
     <>
       <Header />
@@ -22,11 +41,18 @@ const Posts = ({ posts }: { posts: PostProps[] }) => {
         <ul className="space-y-4">
           {posts.map((post) => (
             <li key={post.id}>
-              <PostCard title={post.title} content={post.body} />
+              <PostCard
+                title={post.title}
+                content={post.body}
+                onClick={() => openModal(post)}
+              />
             </li>
           ))}
         </ul>
       </main>
+
+      {/* Modal only shown if isModalOpen is true and a post is selected */}
+      {isModalOpen && post && <PostModal post={post} onClose={closeModal} />}
     </>
   );
 };
