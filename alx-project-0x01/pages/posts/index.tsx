@@ -4,30 +4,26 @@ import React, { useState } from "react";
 import Header from "@/components/layout/Header";
 import PostCard from "@/components/common/PostCard";
 import PostModal from "@/components/common/PostModal";
-import { PostProps, PostData } from "@/interfaces";
+// Notice: No import of PostProps here
 
 export async function getStaticProps() {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-  const posts: PostProps[] = await res.json();
+  const posts = await res.json();  // No explicit PostProps typing here
 
   return {
     props: { posts },
   };
 }
 
-const Posts = ({ posts }: { posts: PostProps[] }) => {
-  // State to hold the selected post for modal
-  const [post, setPost] = useState<PostData | null>(null);
-  // State to toggle modal visibility
+const Posts = ({ posts }: { posts: any[] }) => {
+  const [post, setPost] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  // Open modal and set the selected post
-  const openModal = (selectedPost: PostData) => {
+  const openModal = (selectedPost: any) => {
     setPost(selectedPost);
     setModalOpen(true);
   };
 
-  // Close modal and clear the selected post
   const closeModal = () => {
     setPost(null);
     setModalOpen(false);
