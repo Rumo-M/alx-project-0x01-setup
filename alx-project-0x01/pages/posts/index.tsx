@@ -4,22 +4,22 @@ import React, { useState } from "react";
 import Header from "@/components/layout/Header";
 import PostCard from "@/components/common/PostCard";
 import PostModal from "@/components/common/PostModal";
-// Notice: No import of PostProps here
+import { PostProps, PostData } from "@/interfaces";  // <-- Import PostProps and PostData
 
 export async function getStaticProps() {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-  const posts = await res.json();  // No explicit PostProps typing here
+  const posts: PostProps[] = await res.json();
 
   return {
     props: { posts },
   };
 }
 
-const Posts = ({ posts }: { posts: any[] }) => {
-  const [post, setPost] = useState(null);
+const Posts = ({ posts }: { posts: PostProps[] }) => {
+  const [post, setPost] = useState<PostData | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const openModal = (selectedPost: any) => {
+  const openModal = (selectedPost: PostData) => {
     setPost(selectedPost);
     setModalOpen(true);
   };
