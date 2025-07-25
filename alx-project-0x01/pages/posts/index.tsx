@@ -21,8 +21,8 @@ const Posts = ({ posts }: { posts: PostProps[] }) => {
         <h1 className="text-2xl font-bold mb-4">Posts</h1>
         <ul className="space-y-4">
           {posts.map((post) => (
-            <li key={post.id}>
-              <h2 className="text-xl font-semibold">{post.title}</h2>
+            <li key={post.id} className="border p-4 rounded-md shadow-sm">
+              <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
               <p>{post.body}</p>
             </li>
           ))}
