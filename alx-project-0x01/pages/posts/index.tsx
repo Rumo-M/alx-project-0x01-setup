@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Header from "@/components/layout/Header";
 import PostCard from "@/components/common/PostCard";
 import PostModal from "@/components/common/PostModal";
-import { PostProps, PostData } from "@/interfaces";  // <-- Import PostProps and PostData
+import { PostProps, PostData } from "@/interfaces";  // <-- includes PostProps
 
 export async function getStaticProps() {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");
