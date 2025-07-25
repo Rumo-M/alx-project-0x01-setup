@@ -16,18 +16,18 @@ export async function getStaticProps() {
 }
 
 const Posts = ({ posts }: { posts: PostProps[] }) => {
-  // State to hold the currently selected post for the modal
+  // State to hold the selected post for modal
   const [post, setPost] = useState<PostData | null>(null);
   // State to toggle modal visibility
   const [isModalOpen, setModalOpen] = useState(false);
 
-  // Function to open modal and set selected post
+  // Open modal and set the selected post
   const openModal = (selectedPost: PostData) => {
     setPost(selectedPost);
     setModalOpen(true);
   };
 
-  // Function to close modal and clear selected post
+  // Close modal and clear the selected post
   const closeModal = () => {
     setPost(null);
     setModalOpen(false);
@@ -51,7 +51,6 @@ const Posts = ({ posts }: { posts: PostProps[] }) => {
         </ul>
       </main>
 
-      {/* Modal only shown if isModalOpen is true and a post is selected */}
       {isModalOpen && post && <PostModal post={post} onClose={closeModal} />}
     </>
   );
