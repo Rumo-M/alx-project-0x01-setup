@@ -1,17 +1,17 @@
 // pages/posts/index.tsx
 
 import Header from "@/components/layout/Header";
+import PostCard from "@/components/common/PostCard";  // Import PostCard component
 import { PostProps } from "@/interfaces";
-import { GetStaticProps } from "next";
 
-export const getStaticProps: GetStaticProps = async () => {
+export async function getStaticProps() {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");
   const posts: PostProps[] = await res.json();
 
   return {
     props: { posts },
   };
-};
+}
 
 const Posts = ({ posts }: { posts: PostProps[] }) => {
   return (
@@ -21,9 +21,8 @@ const Posts = ({ posts }: { posts: PostProps[] }) => {
         <h1 className="text-2xl font-bold mb-4">Posts</h1>
         <ul className="space-y-4">
           {posts.map((post) => (
-            <li key={post.id} className="border p-4 rounded-md shadow-sm">
-              <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
-              <p>{post.body}</p>
+            <li key={post.id}>
+              <PostCard title={post.title} content={post.body} />
             </li>
           ))}
         </ul>
