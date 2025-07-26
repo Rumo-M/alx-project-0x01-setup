@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Header from "@/components/layout/Header";
 import PostCard from "@/components/common/PostCard";
 import PostModal from "@/components/common/PostModal";
-import { PostProps, PostData } from "@/interfaces";  // <-- includes PostProps
+import { PostProps } from "@/interfaces"; // ✅ Required line
 
 export async function getStaticProps() {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");
@@ -16,10 +16,10 @@ export async function getStaticProps() {
 }
 
 const Posts = ({ posts }: { posts: PostProps[] }) => {
-  const [post, setPost] = useState<PostData | null>(null);
+  const [post, setPost] = useState<PostProps | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const openModal = (selectedPost: PostData) => {
+  const openModal = (selectedPost: PostProps) => {
     setPost(selectedPost);
     setModalOpen(true);
   };
@@ -47,7 +47,9 @@ const Posts = ({ posts }: { posts: PostProps[] }) => {
         </ul>
       </main>
 
-      {isModalOpen && post && <PostModal post={post} onClose={closeModal} />}
+      {isModalOpen && post && (
+        <PostModal post={post} onClose={closeModal} />
+      )}
     </>
   );
 };
